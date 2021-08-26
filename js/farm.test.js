@@ -1,4 +1,4 @@
-const { 
+const {
     getYieldForPlant,
     getYieldForCrop,
     getTotalYield,
@@ -47,7 +47,7 @@ describe("getTotalYield", () => {
             { crop: corn, numCrops: 5 },
             { crop: pumpkin, numCrops: 2 },
         ];
-        expect(getTotalYield({ crops })).toBe(23);
+        expect(getTotalYield( {crops} )).toBe(23);
     });
 
     test("Calculate total yield with 0 amount", () => {
