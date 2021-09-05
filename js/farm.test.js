@@ -177,5 +177,45 @@ describe("getYieldForPlant", () => {
     });
 });
 
+describe("getYieldForCrop whit factors", () => {
+    const corn = {
+        name: "corn",
+        yield: 30,
+        factors: {
+            sun: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+            rain: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+        },
+    };
+    const input = {
+        crop: corn,
+        numCrops: 10,
+    };
+    test("Get yield for crop, whit environmentFactor rain high", () => {
+        const environmentFactors = {
+            rain: "high",
+        };
+        const YieldForPlant = getYieldForPlant(corn, environmentFactors)
+        let total = YieldForPlant * 10
+        expect(getYieldForCrop(input, environmentFactors)).toBe(total);
+    });
+    test("Get yield for crop, whit environmentFactors rain and sun", () => {
+        const environmentFactors = {
+            rain: "high",
+            sun: "low"
+        };
+        const YieldForPlant = getYieldForPlant(corn, environmentFactors)
+        let total = YieldForPlant * 10
+        expect(getYieldForCrop(input, environmentFactors)).toBe(total);
+    });
+});
+
 
 
