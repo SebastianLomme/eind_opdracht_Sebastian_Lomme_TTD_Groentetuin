@@ -6,7 +6,6 @@ const {
     getRevenueForCrop,
     getProfitForCrop,
     getTotalProfit,
-    getYieldForPlantFacter,
 } = require("./farm");
 
 describe("getYieldForPlant", () => {
@@ -100,16 +99,83 @@ describe("getYieldForPlant", () => {
                 medium: 0,
                 high: 50,
             },
+            rain: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
         },
     };
-
-    const environmentFactors = {
-        sun: "low",
+    const tomato = {
+        name: "tomato",
+        yield: 50,
+        factors: {
+            sun: {
+                low: -30,
+                medium: 0,
+                high: 80,
+            },
+            rain: {
+                low: -20,
+                medium: 0,
+                high: 70,
+            },
+        },
     };
+    test("Get yield for plant with factor sun low", () => {
+        const environmentFactors = {
+            sun: "low",
+        };
+        expect(getYieldForPlant(corn, environmentFactors)).toBe(15);
+    });
+    test("Get yield for plant with factor sun medium", () => {
+        const environmentFactors = {
+            sun: "medium",
+        };
+        expect(getYieldForPlant(corn, environmentFactors)).toBe(30);
+    });
+    test("Get yield for plant with factor sun high", () => {
+        const environmentFactors = {
+            sun: "high",
+        };
+        expect(getYieldForPlant(corn, environmentFactors)).toBe(45);
+    });
+    test("Get yield for plant with factors sun and rain low", () => {
+        const environmentFactors = {
+            sun: "low",
+            rain:"low",
+        };
+        expect(getYieldForPlant(corn, environmentFactors)).toBe(7.5);
+    });
+    test("Get yield for plant with factors sun and rain medium", () => {
+        const environmentFactors = {
+            sun: "medium",
+            rain: "medium",
+        };
+        expect(getYieldForPlant(corn, environmentFactors)).toBe(30);
+    });
+    test("Get yield for plant with factors sun and rain high", () => {
+        const environmentFactors = {
+            sun: "high",
+            rain: "high",
+        };
+        expect(getYieldForPlant(corn, environmentFactors)).toBe(67.5);
+    });
 
-    test("Get yield for plant with factors", () => {
-        expect(getYieldForPlantFacter(corn, -50)).toBe(15);
+    test("Get yield for plant with factor rain high", () => {
+        const environmentFactors = {
+            rain: "high",
+        };
+        expect(getYieldForPlant(corn, environmentFactors)).toBe(45);
+    });
+    
+    test("Get yield for plant with factor rain high", () => {
+        const environmentFactors = {
+            rain: "high",
+        };
+        expect(getYieldForPlant(tomato, environmentFactors)).toBe(85);
     });
 });
+
 
 
