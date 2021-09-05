@@ -1,25 +1,21 @@
-// const corn = {
-//     name: "corn",
-//     yield: 30,
-//     cost: 1,
-//     factors: {
-//         sun: {
-//             low: -50,
-//             medium: 0,
-//             high: 50,
-//         },
-//     },
-// };
-
-// const input = {
-//     crop: corn,
-//     numCrops: 10,
-// };
-
 const corn = {
     name: "corn",
-    yield: 3,
+    yield: 30,
+    cost: 1,
+    factors: {
+        sun: {
+            low: -50,
+            medium: 0,
+            high: 50,
+        },
+    },
 };
+
+const input = {
+    crop: corn,
+    numCrops: 10,
+};
+
 const pumpkin = {
     name: "pumpkin",
     yield: 4,
@@ -42,15 +38,11 @@ const getTotalProfit = (crop1, crop2) => crop1 + crop2;
 
 const getYieldForPlant = (plant) => plant.yield;
 
+// const getYieldForPlantFacter = (plant, factor) => plant.yield * (100 + factor)/100;
+
 const getYieldForCrop = (input) => input.crop.yield * input.numCrops;
 
 const getTotalYield = (crops) => crops.crops.map(element => element.crop.yield * element.numCrops).reduce((current, total) => current + total);
-
-
-console.log(getTotalYield({crops}))
-
-
-
 
 module.exports = {
     getYieldForPlant,
@@ -60,4 +52,5 @@ module.exports = {
     getRevenueForCrop,
     getProfitForCrop,
     getTotalProfit,
+    getYieldForPlantFacter
 };
