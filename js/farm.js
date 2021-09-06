@@ -1,9 +1,7 @@
 const getCostsForCrop = (input) => input.crop.cost * input.numCrops;
 const getRevenueForCrop = (plant, environmentFactors) => getYieldForPlant(plant.crop, environmentFactors) * plant.numCrops * plant.crop.revenue;
-const getProfitForCrop = (input, environmentFactors) => {
-    return getRevenueForCrop(input, environmentFactors) - getCostsForCrop(input)
-};
-const getTotalProfit = (crop1, crop2) => crop1 + crop2;
+const getProfitForCrop = (input, environmentFactors) => getRevenueForCrop(input, environmentFactors) - getCostsForCrop(input);
+const getTotalProfit = (crops, environmentFactors) => crops.map((crop) => getProfitForCrop(crop, environmentFactors)).reduce((current, total) => current + total);
 
 const setFactors = (plant, environmentFactors, factor) => {
     if (!environmentFactors) {

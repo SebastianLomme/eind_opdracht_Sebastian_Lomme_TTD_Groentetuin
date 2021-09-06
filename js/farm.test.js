@@ -185,11 +185,55 @@ describe("getProfitForCrop", () => {
 })
 
 describe("getTotalProfit", () => {
+    const corn = {
+        name: "corn",
+        yield: 30,
+        cost: 1,
+        revenue: 2,
+        factors: {
+            sun: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+            rain: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+        },
+    };
+    const pumpkin = {
+        name: "pumpkin",
+        yield: 50,
+        cost: 2,
+        revenue: 4,
+        factors: {
+            sun: {
+                low: -20,
+                medium: 0,
+                high: 70,
+            },
+            rain: {
+                low: -80,
+                medium: 0,
+                high: 20,
+            },
+        },
+    };
+
+    const crops = [
+        { crop: corn, numCrops: 5 },
+        { crop: pumpkin, numCrops: 2 },
+    ];
     test("calculate total profit for all crops", () => {
-        const crop1 = 4;
-        const crop2 = 3;
-        const total = crop1 + crop2;
-        expect(getTotalProfit(crop1, crop2)).toBe(total)
+        expect(getTotalProfit(crops)).toBe(691)
+    })
+    test("calculate total profit for all crops", () => {
+        const environmentFactors = {
+            rain: "low",
+        };
+        expect(getTotalProfit(crops, environmentFactors)).toBe(221)
     })
 })
 
