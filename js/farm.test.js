@@ -61,10 +61,17 @@ describe("getTotalYield", () => {
 
 describe("getCostsForCrop", () => {
     test("calculate cost for crop", () => {
-        const costPlant = 1;
-        const numberPlants = 230;
-        const total = costPlant * numberPlants;
-        expect(getCostsForCrop(costPlant, numberPlants)).toBe(total);
+        const corn = {
+            name: "corn",
+            yield: 30,
+            cost: 1,
+            revenue: 2,
+        };
+        const input = {
+            crop: corn,
+            numCrops: 10,
+        };
+        expect(getCostsForCrop(input)).toBe(10);
     })
 })
 
@@ -74,6 +81,18 @@ describe("getRevenueForCrop", () => {
         yield: 30,
         cost: 1,
         revenue: 2,
+        factors: {
+            sun: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+            rain: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+        },
     };
     const input = {
         crop: corn,
@@ -82,7 +101,14 @@ describe("getRevenueForCrop", () => {
     test("calculate total revenue for crop", () => {
         expect(getRevenueForCrop(input)).toBe(600);
     })
+    test("calculate total revenue for crop whit factor rain low", () => {
+        const environmentFactors = {
+            rain: "low",
+        };
+        expect(getRevenueForCrop(input, environmentFactors)).toBe(300);
+    })
 })
+
 
 describe("getRevenueForCrop whit factors ", () => {
     const corn = {
@@ -119,11 +145,17 @@ describe("getRevenueForCrop whit factors ", () => {
 
 describe("getProfitForCrop", () => {
     test("calculate profit for crop", () => {
-        const opbrengsPerPlant = 10;
-        const aantalPlanten = 230;
-        const cost = 50;
-        const profit = (aantalPlanten * opbrengsPerPlant) - cost;
-        expect(getProfitForCrop(aantalPlanten, opbrengsPerPlant, cost)).toBe(profit);
+        const corn = {
+            name: "corn",
+            yield: 30,
+            cost: 1,
+            revenue: 2,
+        };
+        const input = {
+            crop: corn,
+            numCrops: 10,
+        };
+        expect(getProfitForCrop(input)).toBe(590);
     })
 })
 
