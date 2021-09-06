@@ -37,10 +37,9 @@ const getYieldForCrop = (input, environmentFactors) => {
 };
 
 
-const getTotalYield = (crops, environmentFactors) => crops.crops
+const getTotalYield = (input, environmentFactors) => input.crops
     .map(element => getYieldForCrop(element, environmentFactors))
     .reduce((current, total) => current + total);
-
 
 
 module.exports = {

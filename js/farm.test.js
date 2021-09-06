@@ -20,6 +20,7 @@ describe("getYieldForPlant", () => {
 
 describe("getYieldForCrop", () => {
     test("Get yield for crop, simple", () => {
+
         const corn = {
             name: "corn",
             yield: 3,
@@ -265,25 +266,13 @@ describe("getTotalYield whit factors", () => {
         const environmentFactors = {
             rain: "high",
         }
-        let totalYield =
-            crops
-                .map(element => getYieldForCrop(element.crop, environmentFactors))
-                .reduce((total, current) => total + current)
-        expect(getTotalYield( {crops} )).toBe(totalYield);
+        expect(getTotalYield( {crops}, environmentFactors )).toBe(345);
     })
     test("Get yield for all crops, whit environmentFactors rain high and sun low", () => {
         const environmentFactors = {
             rain: "high",
             sun: "low",
         }
-        let totalYield =
-            crops
-                .map(element => getYieldForCrop(element.crop, environmentFactors))
-                .reduce((total, current) => total + current)
-        expect(getTotalYield( {crops} )).toBe(totalYield);
-
+        expect(getTotalYield({crops}, environmentFactors )).toBe(208.5);
     })
 });
-
-
-
