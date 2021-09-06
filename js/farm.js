@@ -1,5 +1,7 @@
 const getCostsForCrop = (kostenPerPlant, aantalPlanten) => kostenPerPlant * aantalPlanten;
-const getRevenueForCrop = (opbrengsPerplant, aantalPlanten) => opbrengsPerplant * aantalPlanten;
+const getRevenueForCrop = (plant, environmentFactors) => {
+    return getYieldForPlant(plant.crop, environmentFactors) * plant.numCrops * plant.crop.revenue
+};
 
 const getProfitForCrop = (opbrengsPerplant, aantalPlanten, cost) => (opbrengsPerplant * aantalPlanten) - cost;
 
