@@ -69,11 +69,51 @@ describe("getCostsForCrop", () => {
 })
 
 describe("getRevenueForCrop", () => {
+    const corn = {
+        name: "corn",
+        yield: 30,
+        cost: 1,
+        revenue: 2,
+    };
+    const input = {
+        crop: corn,
+        numCrops: 10,
+    };
     test("calculate total revenue for crop", () => {
-        const opbrengsPerPlant = 10;
-        const aantalPlanten = 230;
-        const total = opbrengsPerPlant * aantalPlanten;
-        expect(getRevenueForCrop(opbrengsPerPlant, aantalPlanten)).toBe(total);
+        expect(getRevenueForCrop(input)).toBe(600);
+    })
+})
+
+describe("getRevenueForCrop whit factors ", () => {
+    const corn = {
+        name: "corn",
+        yield: 30,
+        cost: 1,
+        revenue: 2,
+        factors: {
+            sun: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+            rain: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+        },
+    };
+
+    const input = {
+        crop: corn,
+        numCrops: 10,
+    };
+    
+    test("calculate total revenue for crop whit factor rain low", () => {
+        const environmentFactors = {
+            rain: "low",
+        };
+        expect(getRevenueForCrop(input, environmentFactors)).toBe(300);
     })
 })
 
