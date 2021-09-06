@@ -13,7 +13,6 @@ describe("getYieldForPlant", () => {
         name: "corn",
         yield: 30,
     };
-
     test("Get yield for plant with no environment factors", () => {
         expect(getYieldForPlant(corn)).toBe(30);
     });
@@ -49,7 +48,6 @@ describe("getTotalYield", () => {
         ];
         expect(getTotalYield({ crops })).toBe(23);
     });
-
     test("Calculate total yield with 0 amount", () => {
         const corn = {
             name: "corn",
@@ -60,33 +58,41 @@ describe("getTotalYield", () => {
     });
 });
 
-test("calculate cost for crop", () => {
-    const costPlant = 1;
-    const numberPlants = 230;
-    const total = costPlant * numberPlants;
-    expect(getCostsForCrop(costPlant, numberPlants)).toBe(total);
+describe("getCostsForCrop", () => {
+    test("calculate cost for crop", () => {
+        const costPlant = 1;
+        const numberPlants = 230;
+        const total = costPlant * numberPlants;
+        expect(getCostsForCrop(costPlant, numberPlants)).toBe(total);
+    })
 })
 
-test("calculate total revenue for crop", () => {
-    const opbrengsPerPlant = 10;
-    const aantalPlanten = 230;
-    const total = opbrengsPerPlant * aantalPlanten;
-    expect(getRevenueForCrop(opbrengsPerPlant, aantalPlanten)).toBe(total);
+describe("getRevenueForCrop", () => {
+    test("calculate total revenue for crop", () => {
+        const opbrengsPerPlant = 10;
+        const aantalPlanten = 230;
+        const total = opbrengsPerPlant * aantalPlanten;
+        expect(getRevenueForCrop(opbrengsPerPlant, aantalPlanten)).toBe(total);
+    })
 })
 
-test("calculate profit for crop", () => {
-    const opbrengsPerPlant = 10;
-    const aantalPlanten = 230;
-    const cost = 50;
-    const profit = (aantalPlanten * opbrengsPerPlant) - cost;
-    expect(getProfitForCrop(aantalPlanten, opbrengsPerPlant, cost)).toBe(profit);
+describe("getProfitForCrop", () => {
+    test("calculate profit for crop", () => {
+        const opbrengsPerPlant = 10;
+        const aantalPlanten = 230;
+        const cost = 50;
+        const profit = (aantalPlanten * opbrengsPerPlant) - cost;
+        expect(getProfitForCrop(aantalPlanten, opbrengsPerPlant, cost)).toBe(profit);
+    })
 })
 
-test("calculate total profit for all crops", () => {
-    const crop1 = 4;
-    const crop2 = 3;
-    const total = crop1 + crop2;
-    expect(getTotalProfit(crop1, crop2)).toBe(total)
+describe("getTotalProfit", () => {
+    test("calculate total profit for all crops", () => {
+        const crop1 = 4;
+        const crop2 = 3;
+        const total = crop1 + crop2;
+        expect(getTotalProfit(crop1, crop2)).toBe(total)
+    })
 })
 
 describe("getYieldForPlant", () => {
@@ -143,7 +149,7 @@ describe("getYieldForPlant", () => {
     test("Get yield for plant with factors sun and rain low", () => {
         const environmentFactors = {
             sun: "low",
-            rain:"low",
+            rain: "low",
         };
         expect(getYieldForPlant(corn, environmentFactors)).toBe(7.5);
     });
@@ -161,20 +167,122 @@ describe("getYieldForPlant", () => {
         };
         expect(getYieldForPlant(corn, environmentFactors)).toBe(67.5);
     });
-
     test("Get yield for plant with factor rain high", () => {
         const environmentFactors = {
             rain: "high",
         };
         expect(getYieldForPlant(corn, environmentFactors)).toBe(45);
     });
-    
     test("Get yield for plant with factor rain high", () => {
         const environmentFactors = {
             rain: "high",
         };
         expect(getYieldForPlant(tomato, environmentFactors)).toBe(85);
     });
+});
+
+describe("getYieldForCrop whit factors", () => {
+    const corn = {
+        name: "corn",
+        yield: 30,
+        factors: {
+            sun: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+            rain: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+        },
+    };
+    const input = {
+        crop: corn,
+        numCrops: 10,
+    };
+    test("Get yield for crop, whit environmentFactor rain high", () => {
+        const environmentFactors = {
+            rain: "high",
+        };
+        const YieldForPlant = getYieldForPlant(corn, environmentFactors)
+        let total = YieldForPlant * 10
+        expect(getYieldForCrop(input, environmentFactors)).toBe(total);
+    });
+    test("Get yield for crop, whit environmentFactors rain and sun", () => {
+        const environmentFactors = {
+            rain: "high",
+            sun: "low"
+        };
+        const YieldForPlant = getYieldForPlant(corn, environmentFactors)
+        let total = YieldForPlant * 10
+        expect(getYieldForCrop(input, environmentFactors)).toBe(total);
+    });
+});
+
+describe("getTotalYield whit factors", () => {
+    const corn = {
+        name: "corn",
+        yield: 30,
+        factors: {
+            sun: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+            rain: {
+                low: -50,
+                medium: 0,
+                high: 50,
+            },
+        },
+    };
+    const pumpkin = {
+        name: "pumpkin",
+        yield: 50,
+        factors: {
+            sun: {
+                low: -20,
+                medium: 0,
+                high: 70,
+            },
+            rain: {
+                low: -80,
+                medium: 0,
+                high: 20,
+            },
+        },
+    };
+
+    const crops = [
+        { crop: corn, numCrops: 5 },
+        { crop: pumpkin, numCrops: 2 },
+    ];
+
+
+    test("Get yield for all crops, whit environmentFactor rain high", () => {
+        const environmentFactors = {
+            rain: "high",
+        }
+        let totalYield =
+            crops
+                .map(element => getYieldForCrop(element.crop, environmentFactors))
+                .reduce((total, current) => total + current)
+        expect(getTotalYield( {crops} )).toBe(totalYield);
+    })
+    test("Get yield for all crops, whit environmentFactors rain high and sun low", () => {
+        const environmentFactors = {
+            rain: "high",
+            sun: "low",
+        }
+        let totalYield =
+            crops
+                .map(element => getYieldForCrop(element.crop, environmentFactors))
+                .reduce((total, current) => total + current)
+        expect(getTotalYield( {crops} )).toBe(totalYield);
+
+    })
 });
 
 
